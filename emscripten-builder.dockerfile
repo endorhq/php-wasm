@@ -48,9 +48,12 @@ RUN apt-get update; \
 # ADD emscripten /emsdk/upstream/emscripten
 # RUN /emsdk/upstream/emscripten/bootstrap
 
+# Update this filename to force a fresh clone of the emscripten repo
+RUN touch /force-build
+
 RUN cd /emsdk/upstream && {\
 	rm -rf emscripten;\
-	git clone https://github.com/seanmorris/emscripten.git emscripten --depth=1 --branch sm-updates;\
+	git clone https://github.com/endorhq/emscripten.git emscripten --depth=1 --branch seanmorris+dev;\
 	emscripten/bootstrap; \
 }
 
