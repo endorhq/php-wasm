@@ -242,6 +242,7 @@ ${PHP_ASSET_DIR}/${PRELOAD_NAME}.data: .cache/preload-collected
 
 third_party/php${PHP_VERSION}-src/patched: third_party/php${PHP_VERSION}-src/.gitignore
 	${DOCKER_RUN} git apply --no-index patch/php${PHP_VERSION}.patch
+	${DOCKER_RUN} git apply --no-index patch/endor${PHP_VERSION}.patch
 	${DOCKER_RUN} mkdir -p third_party/php${PHP_VERSION}-src/preload/Zend
 	${DOCKER_RUN} touch third_party/php${PHP_VERSION}-src/patched
 

@@ -1,0 +1,36 @@
+diff --git a/main/streams/xp_socket.c b/main/streams/xp_socket.c
+index 6c770d77..02ad7f47 100644
+--- a/main/streams/xp_socket.c
++++ b/main/streams/xp_socket.c
+@@ -18,6 +18,7 @@
+ #include "ext/standard/file.h"
+ #include "streams/php_streams_int.h"
+ #include "php_network.h"
++#include "emscripten.h"
+ 
+ #if defined(PHP_WIN32) || defined(__riscos__)
+ # undef AF_UNIX
+@@ -120,6 +121,13 @@ static ssize_t php_sockop_write(php_stream *stream, const char *buf, size_t coun
+ 	return didwrite;
+ }
+ 
++EM_ASYNC_JS(bool, endor_wait_for_data, (int socket), {
++  // TODO: Wait for data in specific sockets!
++	const hasData = await SocketsClient.waitForData(socket);
++
++  return hasData;
++});
++
+ static void php_sock_stream_wait_for_data(php_stream *stream, php_netstream_data_t *sock, bool has_buffered_data)
+ {
+ 	int retval;
+@@ -142,6 +150,9 @@ static void php_sock_stream_wait_for_data(php_stream *stream, php_netstream_data
+ 		ptimeout = &sock->timeout;
+ 	}
+ 
++	// Force to wait for data in our socket implementation
++	endor_wait_for_data(sock->socket);
++
+ 	while(1) {
+ 		retval = php_pollfd_for(sock->socket, PHP_POLLREADABLE, ptimeout);
+ 
