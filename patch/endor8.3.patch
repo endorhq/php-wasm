@@ -1,4 +1,4 @@
-diff --git a/main/streams/xp_socket.c b/main/streams/xp_socket.c
+diff --git a/third_party/php8.3-src/main/streams/xp_socket.c b/third_party/php8.3-src/main/streams/xp_socket.c
 index 6c770d77..02ad7f47 100644
 --- a/main/streams/xp_socket.c
 +++ b/main/streams/xp_socket.c
