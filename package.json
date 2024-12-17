@@ -22,6 +22,7 @@
     "cv3-test": "^0.1.6",
     "pdo-cfd1": "0.0.9-alpha-20",
     "pdo-pglite": "0.0.9-alpha-20",
+    "php-wasm-builder": "^0.0.0",
     "php-wasm-dom": "0.0.9-alpha-20",
     "php-wasm-gd": "0.0.9-alpha-20",
     "php-wasm-iconv": "0.0.9-alpha-20",
