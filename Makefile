@@ -225,12 +225,12 @@ PRELOAD_NAME=php
 -include packages/php-cgi-wasm/pre.mak
 -include $(addsuffix /pre.mak,$(shell npm ls -p))
 
-ifneq (${PRELOAD_ASSETS},)
-# DEPENDENCIES+=
-PHP_ASSET_LIST+= ${PRELOAD_NAME}.data
-ORDER_ONLY+=.cache/preload-collected
-EXTRA_FLAGS+= --preload-name ${PRELOAD_NAME} ${PRELOAD_METHOD} /src/third_party/preload@/preload
-endif
+# ifneq (${PRELOAD_ASSETS},)
+# # DEPENDENCIES+=
+# PHP_ASSET_LIST+= ${PRELOAD_NAME}.data
+# ORDER_ONLY+=.cache/preload-collected
+# EXTRA_FLAGS+= --preload-name ${PRELOAD_NAME} ${PRELOAD_METHOD} /src/third_party/preload@/preload
+# endif
 
 -include packages/php-cgi-wasm/static.mak
 -include $(addsuffix /static.mak,$(shell npm ls -p))
