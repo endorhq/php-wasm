@@ -1,0 +1,3 @@
+[submodule "endor"]
+	path = endor
+	url = git@github.com:endorhq/emscripten-endor.git

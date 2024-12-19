@@ -165,8 +165,9 @@ PHP_CONFIGURE_DEPS=
 DEPENDENCIES=
 ORDER_ONLY=
 EXTRA_FILES=
-CONFIGURE_FLAGS?=
-EXTRA_FLAGS?=
+# Force the hostname to avoid compiling errors in libraries like OpenSSL
+CONFIGURE_FLAGS?=--host=wasm32-emscripten
+EXTRA_FLAGS?=--js-library /src/endor/src/library_endorsockfs.js
 PHP_ARCHIVE_DEPS=third_party/php${PHP_VERSION}-src/configured third_party/php${PHP_VERSION}-src/patched
 ARCHIVES=
 SHARED_LIBS=
@@ -232,10 +233,15 @@ PRELOAD_NAME=php
 -include $(addsuffix /pre.mak,$(shell npm ls -p))
 
 ifneq (${PRELOAD_ASSETS},)
+## For now, skip all these changes to avoid having to build php-wasm using a custom version of Emscripten.
+# It allows us to rely on a specific Emscripten version without having conflicts with any fork.
+# 
+# If we need to preload certain files, we might add them on runtime.
+#
 # DEPENDENCIES+=
-PHP_ASSET_LIST+= ${PRELOAD_NAME}.data
-ORDER_ONLY+=.cache/preload-collected
-EXTRA_FLAGS+= --preload-name ${PRELOAD_NAME} ${PRELOAD_METHOD} /src/third_party/preload@/preload
+# PHP_ASSET_LIST+= ${PRELOAD_NAME}.data
+# ORDER_ONLY+=.cache/preload-collected
+# EXTRA_FLAGS+= --preload-name ${PRELOAD_NAME} ${PRELOAD_METHOD} /src/third_party/preload@/preload
 endif
 
 -include packages/php-cgi-wasm/static.mak
@@ -248,6 +254,7 @@ ${PHP_ASSET_DIR}/${PRELOAD_NAME}.data: .cache/preload-collected
 
 third_party/php${PHP_VERSION}-src/patched: third_party/php${PHP_VERSION}-src/.gitignore
 	${DOCKER_RUN} git apply --no-index patch/php${PHP_VERSION}.patch
+	${DOCKER_RUN} git apply --no-index patch/endor${PHP_VERSION}.patch
 	${DOCKER_RUN} mkdir -p third_party/php${PHP_VERSION}-src/preload/Zend
 	${DOCKER_RUN} touch third_party/php${PHP_VERSION}-src/patched
 

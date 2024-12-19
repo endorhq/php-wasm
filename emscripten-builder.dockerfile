@@ -1,19 +1,4 @@
-# Bisecting for CloudFlare:
-
-# Works (cloudflare)
-# FROM emscripten/emsdk:3.1.43
-# FROM emscripten/emsdk:3.1.44
-
-
-# Broken (cloudflare)
-# FROM emscripten/emsdk:3.1.67
-# FROM emscripten/emsdk:3.1.55
-# FROM emscripten/emsdk:3.1.51
-# FROM emscripten/emsdk:3.1.47
-# FROM emscripten/emsdk:3.1.45
-
-# ARG EMSDK_VERSION="3.1.44"
-ARG EMSDK_VERSION="3.1.67"
+ARG EMSDK_VERSION="3.1.74"
 FROM emscripten/emsdk:${EMSDK_VERSION}
 
 MAINTAINER Sean Morris <sean@seanmorr.is>
@@ -44,15 +29,5 @@ RUN apt-get update; \
 		sed \
 		pv \
 		jq
-
-# RUN rm -rf /emsdk/upstream/emscripten
-# ADD emscripten /emsdk/upstream/emscripten
-# RUN /emsdk/upstream/emscripten/bootstrap
-
-RUN cd /emsdk/upstream && {\
-	rm -rf emscripten;\
-	git clone https://github.com/seanmorris/emscripten.git emscripten --depth=1 --branch sm-updates;\
-	emscripten/bootstrap; \
-}
 
 RUN emcc --check
