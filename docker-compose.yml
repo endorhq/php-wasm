@@ -12,6 +12,6 @@ services:
       ENVIRONMENT: ${ENVIRONMENT:-web}
     volumes:
       - ./:/src
-      - /tmp/emsdk-cache:/emsdk/upstream/emscripten/cache/
+      - ./.emsdk-cache:/emsdk/upstream/emscripten/cache/
       - ./.cache:/emsdk_portable/.data/cache/asmjs/
     command: [bash]
