@@ -1,0 +1,15 @@
+{
+  "name": "php-wasm-mysqli",
+  "description": "mysqli for php-wasm.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanmorris/php-wasm.git"
+  },
+  "author": "Rafael Fernández López <rafa@endor.dev>",
+  "contributors": [
+    "Sean Morris <php-wasm@seanmorr.is>"
+  ],
+  "version": "0.0.9-alpha-27",
+  "main": "index.mjs",
+  "files": []
+}
