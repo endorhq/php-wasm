@@ -1,5 +1,7 @@
 export const parseResponse = response => {
-	const headers = {};
+	// Implement headers as an array as a server might define
+	// multiple headers with the same name (Ex. Set-Cookie). 
+	const headers = [];
 	const line = [];
 	const decoder = new TextDecoder();
 
@@ -16,11 +18,11 @@ export const parseResponse = response => {
 
 				if(colon < 0)
 				{
-					headers[ header ] = true;
+					headers.push([header, true]);
 				}
 				else
 				{
-					headers[ header.substring(0, colon) ] = header.substring(colon + 2);
+					headers.push([header.substring(0, colon), header.substring(colon + 2)]);
 				}
 
 				line.length = 0;

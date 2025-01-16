@@ -576,7 +576,7 @@ export class PhpCgiBase
 
 		let status = 200;
 
-		for(const [name, value] of Object.entries(parsedResponse.headers))
+		for(const [name, value] of parsedResponse.headers)
 		{
 			if(name === 'Status')
 			{
@@ -584,33 +584,24 @@ export class PhpCgiBase
 			}
 		}
 
-		if(parsedResponse.headers['Set-Cookie'])
+		const setCookieHeaders = parsedResponse.headers.filter(el => el[0].toLowerCase() == 'set-cookie');
+
+		for(const [_, raw] of setCookieHeaders)
 		{
-			const raw = parsedResponse.headers['Set-Cookie'];
 			const semi  = raw.indexOf(';');
 			const equal = raw.indexOf('=');
 			const key   = raw.substr(0, equal);
 			const value = raw.substr(1 + equal, -1 + semi - equal);
 
-			this.cookies.set(key, value,);
+			this.cookies.set(key, value);
 		}
 
-		const headers = {...parsedResponse.headers};
+		const headers = parsedResponse.headers;
 
-		// delete headers['Set-Cookie'];
+		const contentTypeHeader = headers.find(el => el[0].toLowerCase() == 'content-type');
 
-		if(extension in this.types)
-		{
-			// headers["Content-type"] = this.types[extension];
-		}
-		else
-		{
-			headers["Content-type"] = headers["Content-type"] ?? 'text/html; charset=utf-8';
-		}
-
-		if(parsedResponse.headers.Location)
-		{
-			headers.Location = parsedResponse.headers.Location;
+		if (contentTypeHeader == null) {
+			headers.push(['Content-Type', 'text/html; charset=utf-8']);
 		}
 
 		const response = new Response(parsedResponse.body || '', { headers, status, url });
