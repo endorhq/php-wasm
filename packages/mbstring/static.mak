@@ -18,7 +18,7 @@ WITH_MBSTRING=static
 endif
 
 ifeq (${WITH_MBSTRING},static)
-CONFIGURE_FLAGS+= --with-mbstring
+CONFIGURE_FLAGS+= --with-mbstring --enable-mbstring
 endif
 
 ifeq (${WITH_MBSTRING},dynamic)
