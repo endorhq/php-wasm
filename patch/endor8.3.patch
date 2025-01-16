@@ -16,7 +16,7 @@ index 6c770d77..02ad7f47 100644
  
 +EM_ASYNC_JS(bool, endor_wait_for_data, (int socket), {
 +  // TODO: Wait for data in specific sockets!
-+	const hasData = await SocketsClient.waitForData(socket);
++	const hasData = await SocketsShim.waitForData(socket);
 +
 +  return hasData;
 +});
