@@ -18,6 +18,7 @@ WITH_EXIF    ?=1
 WITH_FILTER  ?=1
 WITH_SESSION ?=1
 WITH_TOKENIZER?=1
+WITH_PDO_MYSQL?=1
 
 SKIP_SHARED_LIBS?=0
 
@@ -235,7 +236,7 @@ PRELOAD_NAME=php
 ifneq (${PRELOAD_ASSETS},)
 ## For now, skip all these changes to avoid having to build php-wasm using a custom version of Emscripten.
 # It allows us to rely on a specific Emscripten version without having conflicts with any fork.
-# 
+#
 # If we need to preload certain files, we might add them on runtime.
 #
 # DEPENDENCIES+=
@@ -314,8 +315,14 @@ ifneq (${WITH_TOKENIZER},0)
 CONFIGURE_FLAGS+= --enable-tokenizer
 endif
 
+ifneq (${WITH_PDO_MYSQL},0)
+CONFIGURE_FLAGS+= --with-pdo-mysql --with-zlib
+endif
+
 ifeq (${WITH_ONIGURUMA},0)
 CONFIGURE_FLAGS+= --disable-mbregex
+else
+CONFIGURE_FLAGS+= --enable-mbregex
 endif
 
 ifeq (${WITH_ONIGURUMA},shared)
@@ -343,6 +350,7 @@ third_party/php${PHP_VERSION}-src/configured: ${ENV_FILE} ${ARCHIVES} ${PHP_CONF
 		--enable-pib       \
 		--enable-json      \
 		--enable-pdo       \
+		--enable-fileinfo  \
 		--disable-all      \
 		--disable-fiber-asm \
 		--disable-phpdbg   \
