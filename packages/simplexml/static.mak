@@ -9,7 +9,7 @@ $(error WITH_SIMPLEXML MUST BE 0, 1, static, OR dynamic. PLEASE CHECK YOUR SETTI
 endif
 
 ifeq (${WITH_SIMPLEXML},1)
-WITH_XML=static
+WITH_SIMPLEXML=static
 endif
 
 ifeq (${WITH_SIMPLEXML},static)
