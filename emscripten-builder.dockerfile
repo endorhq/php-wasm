@@ -1,5 +1,7 @@
 ARG EMSDK_VERSION="3.1.74"
 FROM emscripten/emsdk:${EMSDK_VERSION}
+# https://stackoverflow.com/a/56748289
+ARG EMSDK_VERSION
 
 MAINTAINER Sean Morris <sean@seanmorr.is>
 
@@ -29,5 +31,9 @@ RUN apt-get update; \
 		sed \
 		pv \
 		jq
+
+# Apply patches
+COPY ./endor/ /endor
+RUN /endor/patch/${EMSDK_VERSION}/apply.sh
 
 RUN emcc --check
