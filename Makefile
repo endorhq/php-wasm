@@ -168,7 +168,7 @@ ORDER_ONLY=
 EXTRA_FILES=
 # Force the hostname to avoid compiling errors in libraries like OpenSSL
 CONFIGURE_FLAGS?=--host=wasm32-emscripten
-EXTRA_FLAGS?=--js-library /src/endor/src/library_endorsockfs.js
+EXTRA_FLAGS?=--js-library /src/endor/src/library_endorsockfs.js --js-library /src/endor/src/library_filesystemaccessfs.js
 PHP_ARCHIVE_DEPS=third_party/php${PHP_VERSION}-src/configured third_party/php${PHP_VERSION}-src/patched
 ARCHIVES=
 SHARED_LIBS=
@@ -414,7 +414,7 @@ BUILD_FLAGS=-f ../../php.mk \
 		-Wl,-zcommon-page-size=2097152 -Wl,-zmax-page-size=2097152 -L/src/lib/lib \
 		${SYMBOL_FLAGS} -flto -fPIC \
 		-s EXPORTED_FUNCTIONS='\''["_malloc", "_free", "_main"]'\'' \
-		-s EXPORTED_RUNTIME_METHODS='\''["ccall", "UTF8ToString", "lengthBytesUTF8", "stringToUTF8", "getValue", "setValue", "lengthBytesUTF8", "FS", "ENV"]'\'' \
+		-s EXPORTED_RUNTIME_METHODS='\''["ccall", "UTF8ToString", "lengthBytesUTF8", "stringToUTF8", "getValue", "setValue", "lengthBytesUTF8", "FS", "FILESYSTEMACCESSFS", "ENV"]'\'' \
 		-s INITIAL_MEMORY=${INITIAL_MEMORY} \
 		-s MAXIMUM_MEMORY=${MAXIMUM_MEMORY} \
 		-s ENVIRONMENT=${ENVIRONMENT}       \
